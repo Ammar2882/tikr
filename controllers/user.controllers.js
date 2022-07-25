@@ -3,6 +3,7 @@ import { SuccessResponse } from "../utils/responseTempletes"
 import { sendMessageSingleDevice } from "../utils/twilio"
 import User from "../models/User"
 import { UserNameGenerator } from "../utils/userNameGenerator"
+import { JWT } from "../utils/generateJWT"
 const sendOtp = async (req, res, next) => {
     try {
         const body = req.body
@@ -24,26 +25,34 @@ const sendOtp = async (req, res, next) => {
 }
 const otpVerification = async (req, res, next) => {
     try {
+console.log(req.body , "body")
         const body = req.body
-        const user = await User.findOne({phone:body.number})
+        const user = await User.findOne({phone:body?.number})
+        console.log(user , "user found")
         if(!user){
-            SuccessResponse(res,false,"no user exists by this number",null)
+             return SuccessResponse(res,false,"no user exists by this number",null)
         }
             if(user.otp){
                 if(user.otp === `${body.otp}`){
                 const userName = UserNameGenerator()
                   const saved = await User.findOneAndUpdate({phone:body.number},{otp:"####" , user_name:userName},{new:true})
                   if(saved){
-                    SuccessResponse(res,true,"signed up successfully",saved)
+                    const token=JWT(saved)
+                    let user={
+                        user:saved,
+                        token:token
+                    }
+                   return SuccessResponse(res,true,"signed up successfully",user)
                   }
                 }
                 else{
-                    SuccessResponse(res,false,"OTP does not match",null)
+                   return SuccessResponse(res,false,"OTP does not match",null)
                 }
             }
         }
     catch (e) {
-        next(new ErrorResponse(400, e))
+        console.log(e)
+        return next(new ErrorResponse())
     }
 }
 export { sendOtp,otpVerification }
