@@ -1,18 +1,23 @@
-import { SuccessResponse } from '../utils/responseTempletes';
 
-let jwt = require('jsonwebtoken');
 
-export function checkAuth(req, res) {
+import jwt from 'jsonwebtoken';
+
+export const checkAuth=(req, res,next)=> {
     let token = req.headers && req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
     if (token && token.startsWith('Bearer')) {
         // Remove Bearer from string
         token = token.slice(7, token.length);
     }
-    let secret = process.env.secretkey;
+    let secret = process.env.JWT_SECRET;
     if (token) {
         jwt.verify(token, secret, (err, decoded) => {
             if (err) {
-              SuccessResponse(res,false,"token is not valid",null)
+                res.json({
+                    success:false,
+                    status:401,
+                    message:"token is not valid",
+                    data:null
+                })
             }
             else {
                 req.decoded = decoded;
@@ -21,6 +26,11 @@ export function checkAuth(req, res) {
         });
     }
     else {
-     SuccessResponse(res,false,"token is not supplied",null)
+        res.json({
+            success:false,
+            status:401,
+            message:"token is not supplied",
+            data:null
+        })
     }
 };

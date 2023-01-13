@@ -15,7 +15,7 @@ let app = express();
 
 //load all routes
 import userRoutes from './routes/userRoutes.js'
-// import gameRoutes from './routes/GameRoutes.js'
+import adminRoutes from './routes/AdminRoutes.js'
 
 // Load env vars
 dotenv.config();
@@ -56,7 +56,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/api/v1/user', userRoutes);
-// app.use('/api/v1/game', gameRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 
 app.use(errorHandler)

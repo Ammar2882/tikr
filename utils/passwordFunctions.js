@@ -1,13 +1,12 @@
-const bcrypt = require('bcrypt');
+import bcrypt  from 'bcrypt';
 const saltRounds = 10;
 export async function encryptPassword(plainPassword) {
     try {
         const encyptedPassword = await bcrypt.hash(plainPassword, saltRounds);
-        console.log(encyptedPassword);
         return encyptedPassword;
     }
     catch (ex) {
-        return ex
+        console.log(ex)
     }
 }
 
@@ -19,6 +18,6 @@ export async function verifyPassword(plainPassword, hashedPassword) {
         return match;
     }
     catch (ex) {
-        return ex;
+        console.log(ex)
     }
 }
