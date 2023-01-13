@@ -55,6 +55,10 @@ if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
 
+app.use('/',(req,res,next)=>{
+    console.log('Application Changed')
+})
+
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/admin', adminRoutes);
 
