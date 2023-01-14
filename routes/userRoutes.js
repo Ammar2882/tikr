@@ -1,5 +1,6 @@
 import express from 'express';
 import { placeBet } from '../controllers/user.controllers';
+import { checkAuth } from '../middlewares/checkAuth';
 const router = express.Router();
 
 //load controllers
@@ -12,6 +13,6 @@ router.post('/otpverification',()=>{
     console.log('q')
 }) 
 
-router.post('/placebet',placeBet) 
+router.post('/placebet',checkAuth,placeBet) 
 
 export default router
