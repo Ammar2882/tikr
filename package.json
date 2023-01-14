@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node --experimental-modules --es-module-specifier-resolution=node ./app.js",
-    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node ./app.js"
+    "start": "node --experimental-modules --es-module-specifier-resolution=node ./index.js",
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node ./index.js"
   },
   "engines": {
     "node":"14.x"
