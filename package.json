@@ -7,6 +7,9 @@
     "start": "node --experimental-modules --es-module-specifier-resolution=node ./app.js",
     "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node ./app.js"
   },
+  "engines": {
+    "node":"14x"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "~1.4.4",
