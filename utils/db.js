@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+const mongoose =require('mongoose')
 const db = mongoose.connection;
-export const connectDb = async(mongouri)=>{
+const connectDb = async(mongouri)=>{
     var CONNECTION_URL = `${mongouri}`
    mongoose.connect(CONNECTION_URL, { keepAliveInitialDelay: 300000 });
     
@@ -12,3 +12,5 @@ export const connectDb = async(mongouri)=>{
         console.log(`Error occured connecting to database: ${error.message}`)
     })
 }
+
+module.exports = connectDb

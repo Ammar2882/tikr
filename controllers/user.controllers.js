@@ -1,8 +1,8 @@
 
-import {User} from "../models/User"
-import { JWT } from "../utils/generateJWT"
-import { Bet } from "../models/Bet"
-import Placements from "../models/Placements"
+const {User} = require("../models/User")
+const { JWT } = require("../utils/generateJWT")
+const { Bet } = require("../models/Bet")
+const Placements = require("../models/Placements")
 // const sendOtp = async (req, res, next) => {
 //     try {
 //         const body = req.body
@@ -54,7 +54,7 @@ import Placements from "../models/Placements"
 // }
 
 
-export const userLogin =async(req,res,next)=>{
+exports.userLogin =async(req,res,next)=>{
     try{
         const {number , password} = req.body
         const user = await User.findOne({number , password})
@@ -84,7 +84,7 @@ export const userLogin =async(req,res,next)=>{
     }
 }
 
-export const placeBet = async(req,res,next)=>{
+exports.placeBet = async(req,res,next)=>{
     try{
         const {numbers , userId , betId} = req.body
         if(numbers.length>0 && userId && betId){

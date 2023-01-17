@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const BetSchema = new mongoose.Schema({
     gameTitle :{
@@ -38,4 +38,4 @@ const BetSchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-export const Bet =  mongoose.model('Bet', BetSchema)
+module.exports =  mongoose.model('Bet', BetSchema)

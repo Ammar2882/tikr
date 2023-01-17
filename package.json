@@ -2,10 +2,9 @@
   "name": "ticker",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "scripts": {
-    "start": "node --experimental-modules --es-module-specifier-resolution=node ./index.js",
-    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node ./index.js"
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js"
   },
   "engines": {
     "node":"14.x"

@@ -1,6 +1,6 @@
-import express from 'express';
-import { placeBet } from '../controllers/user.controllers';
-import { checkAuth } from '../middlewares/checkAuth';
+const express = require('express');
+const { placeBet } = require('../controllers/user.controllers');
+const { checkAuth } = require('../middlewares/checkAuth');
 const router = express.Router();
 
 //load controllers
@@ -15,4 +15,4 @@ router.post('/otpverification',()=>{
 
 router.post('/placebet',checkAuth,placeBet) 
 
-export default router
+module.exports = router

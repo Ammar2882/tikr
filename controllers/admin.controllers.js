@@ -1,11 +1,11 @@
 
-import {Admin }from "../models/Admin"
-import { Bet } from "../models/Bet"
-import { User } from "../models/User.js"
-import { JWT} from "../utils/generateJWT"
-import { encryptPassword, verifyPassword } from "../utils/passwordFunctions"
+const {Admin }= require("../models/Admin")
+const { Bet } = require("../models/Bet")
+const { User } = require("../models/User.js")
+const { JWT} = require("../utils/generateJWT")
+const { encryptPassword, verifyPassword } = require("../utils/passwordFunctions")
 
-export const adminLogin = async (req,res,next) =>{
+exports.adminLogin = async (req,res,next) =>{
     try{
         const {email , password} = req.body
         const admin = await Admin.findOne({email})
@@ -46,7 +46,7 @@ export const adminLogin = async (req,res,next) =>{
 
 
 //bets
-export const createBet = async(req,res,next)=>{
+exports.createBet = async(req,res,next)=>{
   try{
     const {gameTitle , gameType,role} = req.body
     if(role.toLowerCase() !== 'admin'){
@@ -85,7 +85,7 @@ export const createBet = async(req,res,next)=>{
     console.log(err)
   }
 }
-export const getAllActiveBets = async(req,res,next)=>{
+exports.getAllActiveBets = async(req,res,next)=>{
     try{
         const {role} = req.body
         if(role.toLowerCase() !== 'admin'){
@@ -108,7 +108,7 @@ export const getAllActiveBets = async(req,res,next)=>{
         console.log(err, ' :err')
     }
 }
-export const getAllAnnouncedBets = async(req,res,next)=>{
+exports.getAllAnnouncedBets = async(req,res,next)=>{
     try{
         const {role} = req.body
         if(role.toLowerCase() !== 'admin'){
@@ -131,7 +131,7 @@ export const getAllAnnouncedBets = async(req,res,next)=>{
         console.log(err, ' :err')
     }
 }
-export const getBetById = async (req,res,next)=>{
+exports.getBetById = async (req,res,next)=>{
     try{
         const {role,betId} = req.body
         if(role.toLowerCase() !== 'admin'){
@@ -155,7 +155,7 @@ export const getBetById = async (req,res,next)=>{
     }
 }
 
-export const deleteBet = async(req,res,next)=>{
+exports.deleteBet = async(req,res,next)=>{
     try{
         const {betId ,role} = req.body
         if(role.toLowerCase() !== 'admin'){
@@ -182,7 +182,7 @@ export const deleteBet = async(req,res,next)=>{
 
 
 // users
-export const createUser = async(req,res,next)=>{
+exports.createUser = async(req,res,next)=>{
     try{
         const {userName , password,userType , phone,role} = req.body
       if(role.toLowerCase() !== 'admin'){
@@ -232,7 +232,7 @@ export const createUser = async(req,res,next)=>{
     }
     
 }
-export const getAllActiveUsers = async(req,res,next)=>{
+exports.getAllActiveUsers = async(req,res,next)=>{
     try{
         const {role} = req.body
         if(role.toLowerCase() !== 'admin'){
@@ -255,7 +255,7 @@ export const getAllActiveUsers = async(req,res,next)=>{
         console.log(err, ' :err')
     }
 }
-export const getAllUsers = async(req,res,next)=>{
+exports.getAllUsers = async(req,res,next)=>{
     try{
         const {role} = req.body
         if(role.toLowerCase() !== 'admin'){
@@ -278,7 +278,7 @@ export const getAllUsers = async(req,res,next)=>{
         console.log(err, ' :err')
     }
 }
-export const getUserById = async (req,res,next)=>{
+exports.getUserById = async (req,res,next)=>{
     try{
         const {role,userId} = req.body
         if(role.toLowerCase() !== 'admin'){
@@ -302,7 +302,7 @@ export const getUserById = async (req,res,next)=>{
     }
 }
 
-export const addBalance = async (req,res,next)=>{
+exports.addBalance = async (req,res,next)=>{
     try{
         const {userId,balance,role} = req.body
       if(role.toLowerCase() !== 'admin'){

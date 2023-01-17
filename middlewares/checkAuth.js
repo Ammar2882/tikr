@@ -1,8 +1,8 @@
 
 
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
-export const checkAuth=(req, res,next)=> {
+exports.checkAuth=(req, res,next)=> {
     let token = req.headers && req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
     if (token && token.startsWith('Bearer')) {
         // Remove Bearer from string

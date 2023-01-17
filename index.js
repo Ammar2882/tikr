@@ -1,21 +1,21 @@
-import express from 'express'
-import path from 'path'
-import cookieParser from 'cookie-parser'
-import helmet from 'helmet'
-import xss from 'xss-clean'
-import mongoSanitizer from 'express-mongo-sanitize'
-import rateLimit from 'express-rate-limit'
-import dotenv from 'dotenv'
-import logger from 'morgan'
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import {errorHandler} from './middlewares/error.js'
-import {connectDb} from './utils/db.js'
+const express = require('express')
+const path = require('path')
+const cookieParser = require('cookie-parser')
+const helmet = require('helmet')
+const xss = require('xss-clean')
+const mongoSanitizer = require('express-mongo-sanitize')
+const rateLimit = require('express-rate-limit')
+const dotenv = require('dotenv')
+const logger = require('morgan')
+const { fileURLToPath } = require('url')
+const { dirname } = require('path')
+const {errorHandler} = require('./middlewares/error.js')
+const connectDb = require('./utils/db.js')
 let app = express();
 
 //load all routes
-import userRoutes from './routes/userRoutes.js'
-import adminRoutes from './routes/AdminRoutes.js'
+const userRoutes = require('./routes/userRoutes.js')
+const adminRoutes = require('./routes/AdminRoutes.js')
 
 // Load env vars
 dotenv.config();
@@ -31,8 +31,6 @@ app.use(cookieParser());
 
 // static files
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Data sanitization against NoSQL query injection
@@ -55,19 +53,19 @@ if (process.env.NODE_ENV === 'development') {
   app.use(logger('dev'));
 }
 
-app.use('/',(req,res,next)=>{
-    console.log('Application Changed')
-})
 
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/admin', adminRoutes);
 
 
-app.use(errorHandler)
+// app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT,console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
+const server = app.listen(PORT,(err)=>{
+    if(err) console.log('error in server : ',err)
+    else console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+});
 
 // Handle unhandled promise rejection
 process.on('unhandledRejection', (err, promise) => {
@@ -78,9 +76,8 @@ process.on('unhandledRejection', (err, promise) => {
 
 app.use('*', (req, res) => {
     res.status(404, {
-        message: 'NOT FOUND'
+        message: 'sorry'
     })
 });
 
-
-export default app;
+module.exports = server

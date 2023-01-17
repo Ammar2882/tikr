@@ -1,6 +1,6 @@
-import bcrypt  from 'bcrypt';
+const bcrypt = require('bcrypt');
 const saltRounds = 10;
-export async function encryptPassword(plainPassword) {
+exports.encryptPassword=async(plainPassword)=> {
     try {
         const encyptedPassword = await bcrypt.hash(plainPassword, saltRounds);
         return encyptedPassword;
@@ -11,7 +11,7 @@ export async function encryptPassword(plainPassword) {
 }
 
 
-export async function verifyPassword(plainPassword, hashedPassword) {
+exports.verifyPassword=async(plainPassword, hashedPassword) =>{
     try {
         encryptPassword(plainPassword);
         const match = await bcrypt.compare(plainPassword, hashedPassword);

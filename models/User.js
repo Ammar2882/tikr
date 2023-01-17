@@ -1,5 +1,5 @@
 
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
     phone: {
@@ -37,4 +37,4 @@ const UserSchema = new mongoose.Schema({
 
 }, { timestamps: true })
 
-export const User =  mongoose.model('User', UserSchema)
+module.exports =  mongoose.model('User', UserSchema)

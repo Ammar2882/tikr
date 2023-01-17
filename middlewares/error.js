@@ -1,5 +1,5 @@
 //File created for creating custom errors
-export const errorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
     //Log to console for dev
     console.log(err.stack);
 
@@ -8,4 +8,6 @@ export const errorHandler = (err, req, res, next) => {
         error: err.message || 'Server Error'
     });
 }
+
+module.exports= errorHandler
 

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose')
 
 const AdminSchema = new mongoose.Schema({
     phone: {
@@ -35,4 +35,4 @@ const AdminSchema = new mongoose.Schema({
     
 }, { timestamps: true })
 
-export const Admin = mongoose.model('Admin', AdminSchema)
+module.exports= mongoose.model('Admin', AdminSchema)
