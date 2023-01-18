@@ -66,11 +66,15 @@ app.use('/',(req,res)=>{
 
 const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT,(err)=>{
+app.listen(PORT,(err)=>{
     if(err) console.log('error in server : ',err)
     else console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 });
-
+app.use('*', (req, res) => {
+    res.status(404, {
+        message: 'sorry'
+    })
+});
 // Handle unhandled promise rejection
 process.on('unhandledRejection', (err, promise) => {
     console.log(`Error: ${err.message}`);
@@ -78,9 +82,5 @@ process.on('unhandledRejection', (err, promise) => {
     server.close(() => process.exit(1));
 });
 
-app.use('*', (req, res) => {
-    res.status(404, {
-        message: 'sorry'
-    })
-});
+
 
