@@ -1,7 +1,7 @@
 
-const {Admin }= require("../models/Admin")
-const { Bet } = require("../models/Bet")
-const { User } = require("../models/User.js")
+const Admin= require("../models/Admin")
+const Bet = require("../models/Bet")
+const  User  = require("../models/User.js")
 const { JWT} = require("../utils/generateJWT")
 const { encryptPassword, verifyPassword } = require("../utils/passwordFunctions")
 
