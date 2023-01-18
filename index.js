@@ -84,4 +84,4 @@ app.use('*', (req, res) => {
     })
 });
 
-module.exports = server
+module.exports = app
