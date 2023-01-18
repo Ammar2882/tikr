@@ -13,7 +13,6 @@ exports.encryptPassword=async(plainPassword)=> {
 
 exports.verifyPassword=async(plainPassword, hashedPassword) =>{
     try {
-        encryptPassword(plainPassword);
         const match = await bcrypt.compare(plainPassword, hashedPassword);
         return match;
     }
