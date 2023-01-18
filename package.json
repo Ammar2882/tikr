@@ -2,10 +2,10 @@
   "name": "ticker",
   "version": "0.0.0",
   "private": true,
-  "main": "Index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node Index",
-    "dev": "nodemon Index"
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
