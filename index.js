@@ -14,7 +14,7 @@ const connectDb = require('./utils/db.js')
 let app = express();
 
 //load all routes
-const userRoutes = require('./routes/userRoutes.js')
+const userRoutes = require('./routes/UserRoutes.js')
 const adminRoutes = require('./routes/AdminRoutes.js')
 
 // Load env vars
