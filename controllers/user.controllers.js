@@ -1,7 +1,7 @@
 
-const {User} = require("../models/User")
+const User = require("../models/User")
 const { JWT } = require("../utils/generateJWT")
-const { Bet } = require("../models/Bet")
+const  Bet  = require("../models/Bet")
 const Placements = require("../models/Placements")
 // const sendOtp = async (req, res, next) => {
 //     try {
@@ -157,3 +157,81 @@ exports.placeBet = async(req,res,next)=>{
         console.log(err , " :err")
     }
 }
+
+exports.userBets=async(req,res,next)=>{
+    try{
+        const {userId} = req.body
+        let userBets = await Placements.find({userId}).populate('betId')
+        if(userBets.length > 0){
+            let activeBets = []
+            let announcedBets = []
+            for(let i=0 ; i<userBets.length ; i++){
+                if(userBets[i].betId.status === 'ongoing'){
+                    activeBets.push(userBets[i].betId)
+                }
+                else{
+                    announcedBets.push(userBets[i].betId)
+                }
+            }
+            return res.json({
+                success:true,
+                status:200,
+                message:"User Bets",
+                data:{
+                    activeBets,
+                    announcedBets
+                }
+            })
+        }  
+        else{
+            return res.json({
+                success:false,
+                status:400,
+                message:"No bets found",
+                data:null
+            })
+        } 
+    }
+    catch(err){
+        console.log(err," :err")
+    }
+}
+
+// exports.userBets=async(req,res,next)=>{
+//     try{
+//         const {userId} = req.body
+//         let userBets = await Placements.find({userId}).populate('betId')
+//         if(userBets.length > 0){
+//             let activeBets = []
+//             let announcedBets = []
+//             for(let i=0 ; i<userBets.length ; i++){
+//                 if(userBets.betId.status === 'ongoing'){
+//                     activeBets.push(userBets.betId)
+//                 }
+//                 else{
+//                     announcedBets.push(userBets.betId)
+//                 }
+//             }
+//             return res.json({
+//                 success:true,
+//                 status:200,
+//                 message:"User Bets",
+//                 data:{
+//                     activeBets,
+//                     announcedBets
+//                 }
+//             })
+//         }  
+//         else{
+//             return res.json({
+//                 success:false,
+//                 status:400,
+//                 message:"No bets found",
+//                 data:null
+//             })
+//         } 
+//     }
+//     catch(err){
+//         console.log(err," :err")
+//     }
+// }

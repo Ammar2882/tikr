@@ -16,6 +16,7 @@ let app = express();
 //load all routes
 const userRoutes = require('./routes/UserRoutes.js')
 const adminRoutes = require('./routes/AdminRoutes.js')
+const { drawBet, checkDrawingBets } = require('./Jobs/DrawBet.js')
 
 // Load env vars
 dotenv.config();
@@ -56,25 +57,21 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/admin', adminRoutes);
-
-app.use('/',(req,res)=>{
-    res.json({message:'hello'})
-})
-
+app.use('*', (req, res) => {
+    res.status(404, {
+        message: 'sorry'
+    })
+});
 
 // app.use(errorHandler)
-
+checkDrawingBets()
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT,(err)=>{
     if(err) console.log('error in server : ',err)
     else console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 });
-app.use('*', (req, res) => {
-    res.status(404, {
-        message: 'sorry'
-    })
-});
+
 // Handle unhandled promise rejection
 process.on('unhandledRejection', (err, promise) => {
     console.log(`Error: ${err.message}`);

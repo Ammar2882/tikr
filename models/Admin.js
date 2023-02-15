@@ -31,6 +31,14 @@ const AdminSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
+    },
+    totalEarned:{
+        type:Number,
+        default:0
+    },
+    totalSpent:{
+        type:Number,
+        default:0
     }
     
 }, { timestamps: true })

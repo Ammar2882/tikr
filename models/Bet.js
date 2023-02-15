@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const {Schema}  = mongoose
 
 const BetSchema = new mongoose.Schema({
     gameTitle :{
@@ -35,7 +36,12 @@ const BetSchema = new mongoose.Schema({
     status:{
         type:String,
         default:'ongoing'
-    }
+    },
+    winnerId:{
+        type: Schema.Types.ObjectId, 
+        ref: 'Winner',
+        index : true
+    } 
 }, { timestamps: true })
 
 module.exports =  mongoose.model('Bet', BetSchema)

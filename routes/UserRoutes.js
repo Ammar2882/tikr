@@ -1,5 +1,5 @@
 const express = require('express');
-const { placeBet } = require('../controllers/user.controllers');
+const { placeBet , userBets} = require('../controllers/user.controllers');
 const { checkAuth } = require('../middlewares/checkAuth');
 const router = express.Router();
 
@@ -14,5 +14,5 @@ router.post('/otpverification',()=>{
 }) 
 
 router.post('/placebet',checkAuth,placeBet) 
-
+router.post('/userbets',checkAuth,userBets) 
 module.exports = router

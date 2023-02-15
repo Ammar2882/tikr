@@ -1,7 +1,9 @@
 
 const Admin= require("../models/Admin")
 const Bet = require("../models/Bet")
+const Placements = require("../models/Placements")
 const  User  = require("../models/User.js")
+const Winner = require("../models/Winner")
 const { JWT} = require("../utils/generateJWT")
 const { encryptPassword, verifyPassword } = require("../utils/passwordFunctions")
 
@@ -171,7 +173,7 @@ exports.deleteBet = async(req,res,next)=>{
             success:true,
             status:200,
             message:"Bet Deleted Successfully",
-            data : null
+            data : deletedBet
         })
     }
     catch(err){
@@ -179,6 +181,23 @@ exports.deleteBet = async(req,res,next)=>{
     }
 }
 
+// exports.drawBet = async(req,res,next)=>{
+//     try{
+//         let {betId , role} = req.body
+//         if(role.toLowerCase() !== 'admin'){
+//             return res.json({
+//                 success:false,
+//                 status:401,
+//                 message:"Forbidden",
+//                 data : null
+//             })
+//         }
+//         let bet = await Bet.findOne({_id:betId})
+//     }
+//     catch(err){
+//         console.log(err, ' :err')
+//     }
+// }
 
 
 // users
@@ -301,7 +320,6 @@ exports.getUserById = async (req,res,next)=>{
         console.log(err, ' :err')
     }
 }
-
 exports.addBalance = async (req,res,next)=>{
     try{
         const {userId,balance,role} = req.body
@@ -338,7 +356,65 @@ exports.addBalance = async (req,res,next)=>{
     }
 }
 
+exports.updateBalance = async (req,res,next)=>{
+    try{
+        const {userId,balance,role} = req.body
+      if(role.toLowerCase() !== 'admin'){
+        return res.json({
+            success:false,
+            status:401,
+            message:"Forbidden",
+            data : null
+        })
+      }
+      const user = await User.findOne({_id:userId})
+      if(!user){
+        return res.json({
+            success:false,
+            status:401,
+            message:"No user exists by this ID",
+            data : null
+        })
+      }
+      const addBalance = await User.findOneAndUpdate({_id:userId},{balance:balance},{new:true})
+    
+  
+      return res.json({
+          success:true,
+          status:200,
+          message:"Balance Added",
+          data :addBalance
+      })
+        
+    }
+    catch(err){
+        console.log(err , " :err")
+    }
+}
 
+exports.getWinners = async(req,res,next)=>{
+    try{
+        const {role} = req.body
+        if(role.toLowerCase() !== 'admin'){
+            return res.json({
+                success:false,
+                status:401,
+                message:"Forbidden",
+                data : null
+            })
+          }
+          const allWinners = await Winner.find({})
+          return res.json({
+            success:true,
+            status:200,
+            message:"All Winners",
+            data : allWinners
+        })
+    }
+    catch(err){
+        console.log(err, ' :err')
+    }
+}
 
 
 
