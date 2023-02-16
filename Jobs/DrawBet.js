@@ -40,7 +40,7 @@ const drawBet = async (req, res, next) => {
             betId: singleBet._id
           })
           let savedWinner = await winner.save()
-          let updateBet = await Bet.findOneAndUpdate({ _id: singleBet._id }, { winnerId: savedWinner._id })
+          let updateBet = await Bet.findOneAndUpdate({ _id: singleBet._id }, { winnerId: savedWinner._id,status:'announced' })
         }
       }
     }
