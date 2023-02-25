@@ -121,7 +121,26 @@ exports.getAllAnnouncedBets = async (req, res, next) => {
                 data: null
             })
         }
-        const getAllAnnouncedBets = await Bet.find({ status: 'announced' })
+        const getAllAnnouncedBets = await Bet.find({ status: 'announced' }).populate({
+            path: 'winnerId',
+            populate: [{
+                path: 'firstPosition',
+                model: 'User'
+            },
+            {
+                path: 'secondPosition',
+                model: 'User'
+            },
+            {
+                path: 'thirdPosition',
+                model: 'User'
+            },
+            {
+                path: 'fourthPosition',
+                model: 'User'
+            }]
+        })
+
         return res.json({
             success: true,
             status: 200,
@@ -226,7 +245,7 @@ exports.createUser = async (req, res, next) => {
             userName,
             password: hashedPassword,
             userType: userType.toLowerCase(),
-            phone:phone ? phone : ''
+            phone: phone ? phone : ''
         })
         let saveduser = await newUser.save()
         if (!saveduser) {
@@ -338,7 +357,7 @@ exports.getUsersTransactionHistory = async (req, res, next) => {
             status: 200,
             message: "Transaction History",
             data: {
-                transactionHistory:singleUser.balanceHistory
+                transactionHistory: singleUser.balanceHistory
             }
         })
     }
