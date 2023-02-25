@@ -11,6 +11,7 @@ exports.encryptPassword=async(plainPassword)=> {
 }
 
 
+
 exports.verifyPassword=async(plainPassword, hashedPassword) =>{
     try {
         const match = await bcrypt.compare(plainPassword, hashedPassword);

@@ -200,7 +200,6 @@ exports.deleteBet = async (req, res, next) => {
     }
 }
 
-// exports.drawBet = async(req,res,next)=>{
 //     try{
 //         let {betId , role} = req.body
 //         if(role.toLowerCase() !== 'admin'){
@@ -327,6 +326,31 @@ exports.getUserById = async (req, res, next) => {
             })
         }
         const singleUser = await User.findOne({ _id: userId })
+        return res.json({
+            success: true,
+            status: 200,
+            message: "User Details",
+            data: singleUser
+        })
+    }
+    catch (err) {
+        console.log(err, ' :err')
+    }
+}
+
+exports.UpdateUserById = async (req, res, next) => {
+    try {
+        const { role, userId ,password} = req.body
+        if (role.toLowerCase() !== 'admin') {
+            return res.json({
+                success: false,
+                status: 401,
+                message: "Forbidden",
+                data: null
+            })
+        }
+        const hashedPassword = await encryptPassword(password)
+        const singleUser = await User.findOneAndUpdate({ _id: userId },{password:hashedPassword})
         return res.json({
             success: true,
             status: 200,

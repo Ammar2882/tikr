@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "betting-c1310",
+    "private_key_id": "0af6d6ae997dfc908d839dcf60faf80d6d78730a",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC+DMN/z5KdGi+6\ngP8znh8IpNOkBNrPCX6Ry8R4ZRlCKtfuaPeddXI1fhBU50heX/8GIoBi4H+MS2G0\nZcL96Ewom+xs1DFQdhtsCtELMPHU3ShkvfTphSpXRtTwqJse6tL47PU/IgNwnVqr\n2XwwqdjmIeEh4FeDj3R4n+au8HgGPDqE530b6YU9Ha6vi4cllLKp/NflNfsQGGpa\nwTmNt1Zy4sZC1vOiO8tbTtY0Az7r3S4yb9d7yOrO74FyQ+R8wS0rJssGg/d8Scz3\nA9HDggqZ3swawu81j3f0q4PrgKsy90pZkZ+swacXju6cnChxXG8s0JKD8O/RibhC\nv1+HjThnAgMBAAECggEAMTMQsVfFNtJ+pKOcbXpzwkMZXw66rnpgv9GmjRxvC4gX\n2mpmH+c1p8943uH5BCWJ2ca4weAoZONm6dKmRiELBkBHVm0gTxokQzYRo/oJwPd3\n64yZiJKmwW1e1uZvMfPMphCB9NQTW+YAgRiOY/K0ae8/Xwu63B4ZItkSWRt7lvEx\nbuAfwMpTnOiwNoFfy0oMJmm5rVqB6fKZeyEe2MRMLXBjT7Uz4jwa9PCQoFXwzsga\nNZjUALZF/zQWql7gVpi0P1Eq3heNKrc26WZFAcn0hcypRZttqTkTt8Zgfw2AG5c2\nBwR1vBQJyh50qImqQzxUHSLdkcIy9utPPnLnXVVWgQKBgQD7Wz3VwqWX1NPWruXT\nzh4Oq19fD+mMfl0A+wzu5CBV9pWPRwLc5dLUPxynvKiih5x6G5nUmgne3jED+YAk\nWzec9Y9rLQiG+Cz9Pe6froxDQxg5uI68rixgh7Vv4863GO3E+mdK64Ft8JTYLaka\nHqCHGr75XdLA6Igkf56nI9vUoQKBgQDBj5ScMv+ZKXQLvWMArYiTJfgYXjaf0Bot\n3e4FxI09erGTU7L1o6JQ0EZ/c00x0nqwzekHiUKcrpe2nzflG2U/Fy5C+vkz0vY/\n4qZ3Zl2lixYike9Xm5hfJVjv8h4vO+/3Sk4UphBc6Sss7mLiMHkaLJSXHhgTjVI9\nk9Yu9IloBwKBgCeI3lz01J7g9sDZmYSK8udTxRhqpE1YwsAYvJwGfZ+HvVZf0O91\npoeDtbocTlniApaiKLvrzomjYQpDAAi34DNr3Db7SlAQUOM0DohHKACcWP8bLDg5\nHPnB3qPOrQDXhu5ohD6gdCcapA6sf+B/2LfnWQpX24JEEMXM3ONlHHqBAoGBAJtJ\nd66A87KLIUCx5hWLI0D6ezoBi81XBUm6/NS/xZiHMKPDyJVtfDFdhtGFTW8lL61c\n5RFYu4o8QBcRUaSLAAVHsaOm+frryweh7G9qPsMq/M0rS1t7xxi+O8X09uZqLbC1\nekLyn7oKjsrzTX2t6dpn3aYHTMWS4WHpkzIEmaBNAoGBAL6Kc27YdHpuJMT1vbWo\n3q1N4yrI/m7dRrczCND48YgEqdw+jV0Rzsb48ufAED49/B1Bt/iwcpA8ETzQvOfJ\ni9uzYThxw/3vsmaxsNSppyIkCz/FuJX3rQ3rzAXc+QPvcraTgjOF44EtfNyZ5gUI\n/bZQICP+Frh3B6oWC0UIj1CO\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-qgaax@betting-c1310.iam.gserviceaccount.com",
+    "client_id": "101050135814991230335",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-qgaax%40betting-c1310.iam.gserviceaccount.com"
+  }
+  
