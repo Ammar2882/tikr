@@ -8,6 +8,7 @@ const TransactionSchema = new mongoose.Schema({
 const UserSchema = new mongoose.Schema({
     phone: {
         type: String,
+        default:''
     },
     userName:{
         type:String,
@@ -38,8 +39,6 @@ const UserSchema = new mongoose.Schema({
         type:[TransactionSchema],
         default:[],
     }
-   
-
 }, { timestamps: true })
 
 

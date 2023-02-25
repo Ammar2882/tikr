@@ -226,7 +226,7 @@ exports.createUser = async (req, res, next) => {
             userName,
             password: hashedPassword,
             userType: userType.toLowerCase(),
-            phone
+            phone:phone ? phone : ''
         })
         let saveduser = await newUser.save()
         if (!saveduser) {
