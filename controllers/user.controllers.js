@@ -133,7 +133,7 @@ exports.placeBet = async(req,res,next)=>{
                 }
               
                 const updatedBet = await Bet.findOneAndUpdate({_id : bet._id},{$push: {spotsTaken: {$each: numbers}} , $pullAll: { spotsLeft: numbers } })
-                const cutUserBalance = await User.findOneAndUpdate({_id:userId},{balance:(user.balance - bet.gameType)})
+                const cutUserBalance = await User.findOneAndUpdate({_id:userId},{balance:(user.balance - bet.gameType),$push: { balanceHistory: { cashValue: bet.gameType, direction: 'outbound' } }})
                 if(updatedBet && placedBet && cutUserBalance){
                     return res.json({
                         success:true,
@@ -197,41 +197,59 @@ exports.userBets=async(req,res,next)=>{
     }
 }
 
-// exports.userBets=async(req,res,next)=>{
-//     try{
-//         const {userId} = req.body
-//         let userBets = await Placements.find({userId}).populate('betId')
-//         if(userBets.length > 0){
-//             let activeBets = []
-//             let announcedBets = []
-//             for(let i=0 ; i<userBets.length ; i++){
-//                 if(userBets.betId.status === 'ongoing'){
-//                     activeBets.push(userBets.betId)
-//                 }
-//                 else{
-//                     announcedBets.push(userBets.betId)
-//                 }
-//             }
-//             return res.json({
-//                 success:true,
-//                 status:200,
-//                 message:"User Bets",
-//                 data:{
-//                     activeBets,
-//                     announcedBets
-//                 }
-//             })
-//         }  
-//         else{
-//             return res.json({
-//                 success:false,
-//                 status:400,
-//                 message:"No bets found",
-//                 data:null
-//             })
-//         } 
-//     }
-//     catch(err){
-//         console.log(err," :err")
-//     }
-// }
+exports.drawingSoonBets=async(req,res,next)=>{
+    try{
+        let drawingSoonBets = await Bet.find({status:'ongoing','spotsTaken.79':{$exists:true}})
+            return res.json({
+                success:true,
+                status:200,
+                message:"Drawing soon bets",
+                data:{drawingSoonBets}
+            })  
+    }
+    catch(err){
+        console.log(err," :err")
+    }
+}
+
+exports.latestResults=async(req,res,next)=>{
+    try{
+        let fromDate = new Date()
+        fromDate = new Date(fromDate.setHours(fromDate.getHours()-12))
+        let filters = {
+            status:'announced',
+            updatedAt:{$gte: fromDate} 
+        }
+        let latestResults = await Bet.find(filters)
+            return res.json({
+                success:true,
+                status:200,
+                message:"Latest Results",
+                data:{latestResults}
+            })  
+    }
+    catch(err){
+        console.log(err," :err")
+    }
+}
+
+exports.getTodaysWinners=async(req,res,next)=>{
+    try{
+        let fromDate = new Date()
+        fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate(), 0, 0, 0, 0);
+        let filters = {
+            status:'announced',
+            updatedAt:{$gte: fromDate} 
+        }
+        let todaysWinners = await Bet.find(filters)
+            return res.json({
+                success:true,
+                status:200,
+                message:"Today's Winners",
+                data:{todaysWinners}
+            })  
+    }
+    catch(err){
+        console.log(err," :err")
+    }
+}

@@ -1,10 +1,7 @@
 const express = require('express');
-const { placeBet , userBets} = require('../controllers/user.controllers');
+const { placeBet , userBets, drawingSoonBets, latestResults, getTodaysWinners} = require('../controllers/user.controllers');
 const { checkAuth } = require('../middlewares/checkAuth');
 const router = express.Router();
-
-//load controllers
-// import {otpVerification, sendOtp} from '../controllers/user.controllers'
 
 router.post('/otprequest',()=>{
     console.log('q')
@@ -15,4 +12,8 @@ router.post('/otpverification',()=>{
 
 router.post('/placebet',checkAuth,placeBet) 
 router.post('/userbets',checkAuth,userBets) 
+router.post('/drawingsoonbets',checkAuth,drawingSoonBets) 
+router.post('/latestresults',checkAuth,latestResults) 
+router.post('/todayswinners',checkAuth,getTodaysWinners) 
+
 module.exports = router

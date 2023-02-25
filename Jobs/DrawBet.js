@@ -11,6 +11,7 @@ const drawBet = async (req, res, next) => {
 
     let admin = await Admin.find()
     if (bets.length > 0) {
+      console.log('got active job')
       for (let i = 0; i < bets.length; i++) {
         let singleBet = bets[i]
         if (singleBet.spotsTaken.length === 100) {
@@ -22,10 +23,10 @@ const drawBet = async (req, res, next) => {
           let adminProfit = (parseInt(singleBet.gameType) * 100 * 10) / 100
 
           let result = await Promise.all(
-            [User.findOneAndUpdate({ _id: winners[0] }, { $inc: { balance: firstPrize } })],
-            [User.findOneAndUpdate({ _id: winners[1] }, { $inc: { balance: secondPrize } })],
-            [User.findOneAndUpdate({ _id: winners[2] }, { $inc: { balance: thirdPrize } })],
-            [User.findOneAndUpdate({ _id: winners[3] }, { $inc: { balance: fourthPrize } })],
+            [User.findOneAndUpdate({ _id: winners[0] }, { $inc: { balance: firstPrize },$push: { balanceHistory: { cashValue: firstPrize, direction: 'inbound' }}})],
+            [User.findOneAndUpdate({ _id: winners[1] }, { $inc: { balance: secondPrize },$push: { balanceHistory: { cashValue: secondPrize, direction: 'inbound' } } })],
+            [User.findOneAndUpdate({ _id: winners[2] }, { $inc: { balance: thirdPrize },$push: { balanceHistory: { cashValue: thirdPrize, direction: 'inbound' } } })],
+            [User.findOneAndUpdate({ _id: winners[3] }, { $inc: { balance: fourthPrize },$push: { balanceHistory: { cashValue: fourthPrize, direction: 'inbound' } } })],
             [Admin.findOneAndUpdate({ _id: admin[0]._id }, { $inc: { totalEarned: adminProfit } })],
           )
           let winner = new Winner({

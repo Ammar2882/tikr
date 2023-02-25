@@ -1,17 +1,18 @@
 
 const mongoose = require('mongoose')
+const TransactionSchema = new mongoose.Schema({
+    cashValue:String,
+    direction:String
+}, { timestamps: true })
 
 const UserSchema = new mongoose.Schema({
     phone: {
         type: String,
-        required:true,
-        index: true,
-        unique: [true, "this number already exists"],
     },
     userName:{
         type:String,
         required:true,
-        unique:true
+        unique: [true, "this user name already exists"],
     },
     userType:{
         type:String,
@@ -33,8 +34,15 @@ const UserSchema = new mongoose.Schema({
         default:0,
         type:Number
     },
+    balanceHistory:{
+        type:[TransactionSchema],
+        default:[],
+    }
    
 
 }, { timestamps: true })
+
+
+
 
 module.exports =  mongoose.model('User', UserSchema)
