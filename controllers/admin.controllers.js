@@ -452,7 +452,7 @@ exports.withDraw = async (req, res, next) => {
         }
         const addBalance = await User.findOneAndUpdate(
             { _id: userId },
-            { balance: Math.abs(( user.balance - balance)), $push: { balanceHistory: { cashValue: balance, direction: 'inbound' } } },
+            { balance: Math.abs(( user.balance - balance)), $push: { balanceHistory: { cashValue: balance, direction: 'outbound' } } },
             { new: true }
         )
 
