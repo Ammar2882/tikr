@@ -412,7 +412,7 @@ exports.addBalance = async (req, res, next) => {
         }
         const addBalance = await User.findOneAndUpdate(
             { _id: userId },
-            { balance: (balance + user.balance), $push: { balanceHistory: { cashValue: balance, direction: 'inbound' } } },
+            { balance: (parseInt(balance) + parseInt(user.balance)), $push: { balanceHistory: { cashValue: balance, direction: 'inbound' } } },
             { new: true }
         )
 
@@ -452,7 +452,7 @@ exports.withDraw = async (req, res, next) => {
         }
         const addBalance = await User.findOneAndUpdate(
             { _id: userId },
-            { balance: Math.abs(( user.balance - balance)), $push: { balanceHistory: { cashValue: balance, direction: 'outbound' } } },
+            { balance: Math.abs(( parseInt(user.balance) - parseInt(balance))), $push: { balanceHistory: { cashValue: balance, direction: 'outbound' } } },
             { new: true }
         )
 
