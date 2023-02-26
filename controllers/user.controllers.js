@@ -171,15 +171,17 @@ exports.placeBet = async(req,res,next)=>{
 exports.userBets=async(req,res,next)=>{
     try{
         const {userId} = req.body
-        let userBets = await Placements.find({userId}).populate('betId')
+        let userBets = await Placements.find({userId}).lean().populate('betId')
         if(userBets.length > 0){
             let activeBets = []
             let announcedBets = []
             for(let i=0 ; i<userBets.length ; i++){
                 if(userBets[i].betId.status === 'ongoing'){
+                    userBets[i].betId.numbers = userBets[i].numbers
                     activeBets.push(userBets[i].betId)
                 }
                 else{
+                    userBets[i].betId.numbers = userBets[i].numbers
                     announcedBets.push(userBets[i].betId)
                 }
             }
@@ -249,7 +251,7 @@ exports.getTodaysWinners=async(req,res,next)=>{
         fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate(), 0, 0, 0, 0);
         let filters = {
             status:'announced',
-            updatedAt:{$gte: fromDate} 
+            // updatedAt:{$gte: fromDate} 
         }
         let todaysWinners = await Bet.find(filters)
             return res.json({
