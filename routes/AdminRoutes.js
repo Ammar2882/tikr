@@ -4,7 +4,7 @@ const router = express.Router();
 //load controllers
 const {addBalance, adminLogin, createBet, createUser, 
     getAllActiveBets, getAllActiveUsers, getAllAnnouncedBets, 
-    getAllUsers, getBetById, getUserById, updateBalance, getWinners, dashboardNumbers, getUsersTransactionHistory, UpdateUserById} = require('../controllers/admin.controllers')
+    getAllUsers, getBetById, getUserById, updateBalance, getWinners, dashboardNumbers, getUsersTransactionHistory, UpdateUserById, withDraw} = require('../controllers/admin.controllers')
 const { checkAuth } = require('../middlewares/checkAuth');
 
 router.post('/login' , adminLogin)
@@ -14,6 +14,7 @@ router.post('/getallactiveusers',checkAuth , getAllActiveUsers)
 router.post('/getuserbyid',checkAuth , getUserById)
 router.post('/updateuserbyid',checkAuth , UpdateUserById)
 router.post('/addbalance',checkAuth , addBalance)
+router.post('/withdraw',checkAuth , withDraw)
 router.post('/updatebalance',checkAuth , updateBalance)
 router.post('/getwinners',checkAuth , getWinners)
 router.post('/getdashboarddata',checkAuth , dashboardNumbers)

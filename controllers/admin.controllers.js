@@ -430,6 +430,46 @@ exports.addBalance = async (req, res, next) => {
     }
 }
 
+exports.withDraw = async (req, res, next) => {
+    try {
+        const { userId, balance, role } = req.body
+        if (role.toLowerCase() !== 'admin') {
+            return res.json({
+                success: false,
+                status: 401,
+                message: "Forbidden",
+                data: null
+            })
+        }
+        const user = await User.findOne({ _id: userId })
+        if (!user) {
+            return res.json({
+                success: false,
+                status: 401,
+                message: "No user exists by this ID",
+                data: null
+            })
+        }
+        const addBalance = await User.findOneAndUpdate(
+            { _id: userId },
+            { balance: Math.abs(( user.balance - balance)), $push: { balanceHistory: { cashValue: balance, direction: 'inbound' } } },
+            { new: true }
+        )
+
+
+        return res.json({
+            success: true,
+            status: 200,
+            message: "Balance Added",
+            data: addBalance
+        })
+
+    }
+    catch (err) {
+        console.log(err, " :err")
+    }
+}
+
 exports.updateBalance = async (req, res, next) => {
     try {
         const { userId, balance, role } = req.body
