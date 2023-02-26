@@ -3,6 +3,7 @@ const User = require("../models/User")
 const { JWT } = require("../utils/generateJWT")
 const  Bet  = require("../models/Bet")
 const Placements = require("../models/Placements")
+const { verifyPassword } = require("../utils/passwordFunctions")
 // const sendOtp = async (req, res, next) => {
 //     try {
 //         const body = req.body
@@ -56,31 +57,40 @@ const Placements = require("../models/Placements")
 
 exports.userLogin =async(req,res,next)=>{
     try{
-        const {number , password} = req.body
-        const user = await User.findOne({number , password})
-        if(!admin){
-             return res.json({
-                success:false,
-                status:401,
-                message:"Wrong credentials",
-                data : null
-             })
+        const { userName, password } = req.body
+        const user = await User.findOne({userName:userName})
+        if (!user) {
+            return res.json({
+                success: false,
+                status: 401,
+                message: "User not found",
+                data: null
+            })
         }
-        let token = JWT(user)
+        let passwordCheck = await verifyPassword(password, user.password)
+        if (!passwordCheck) {
+            return res.json({
+                success: false,
+                status: 401,
+                message: "Wrong Password",
+                data: null
+            })
+        }
+        let token = await JWT(user)
         res.json({
-            success:true,
-            status:200,
-            message:"Successfully Logged In",
-            data:{
-                token:token,
-                user:user,
-                role:'user',
+            success: true,
+            status: 200,
+            message: "Successfully Logged In",
+            data: {
+                token: token,
+                user: user,
+                role: 'user',
             }
         })
-  
+
     }
-    catch(err){
-        console.log(err , " :err")
+    catch (err) {
+        console.log(err, " exception occurred")
     }
 }
 

@@ -9,13 +9,13 @@ const { encryptPassword, verifyPassword } = require("../utils/passwordFunctions"
 
 exports.adminLogin = async (req, res, next) => {
     try {
-        const { email, password } = req.body
-        const admin = await Admin.findOne({ email })
+        const { userName, password } = req.body
+        const admin = await Admin.findOne({userName:userName})
         if (!admin) {
             return res.json({
                 success: false,
                 status: 401,
-                message: "Wrong Email",
+                message: "User not found",
                 data: null
             })
         }

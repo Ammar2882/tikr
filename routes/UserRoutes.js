@@ -1,5 +1,5 @@
 const express = require('express');
-const { placeBet , userBets, drawingSoonBets, latestResults, getTodaysWinners} = require('../controllers/user.controllers');
+const { placeBet , userBets, drawingSoonBets, latestResults, getTodaysWinners, userLogin} = require('../controllers/user.controllers');
 const { checkAuth } = require('../middlewares/checkAuth');
 const router = express.Router();
 
@@ -9,6 +9,7 @@ router.post('/otprequest',()=>{
 router.post('/otpverification',()=>{
     console.log('q')
 }) 
+router.post('/login',userLogin) 
 
 router.post('/placebet',checkAuth,placeBet) 
 router.post('/userbets',checkAuth,userBets) 

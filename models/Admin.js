@@ -4,7 +4,6 @@ const AdminSchema = new mongoose.Schema({
     phone: {
         type: String,
         // required: true,
-        index: true,
         unique: [true, "this number already exists"],
         match: [
             /^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$/,
@@ -19,9 +18,9 @@ const AdminSchema = new mongoose.Schema({
         ]
 
     },
-    name: {
+    userName: {
         type: String,
-        default: ''
+        required:true
     },
   
     profilePic: {
