@@ -41,7 +41,11 @@ const BetSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Winner',
         index : true
-    } 
+    } ,
+    winningNumbers:{
+        type:[Number],
+        default:[]
+    }
 }, { timestamps: true })
 
 module.exports =  mongoose.model('Bet', BetSchema)

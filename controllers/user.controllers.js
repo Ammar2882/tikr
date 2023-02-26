@@ -4,6 +4,7 @@ const { JWT } = require("../utils/generateJWT")
 const  Bet  = require("../models/Bet")
 const Placements = require("../models/Placements")
 const { verifyPassword } = require("../utils/passwordFunctions")
+const Winner = require("../models/Winner")
 // const sendOtp = async (req, res, next) => {
 //     try {
 //         const body = req.body
@@ -245,21 +246,54 @@ exports.latestResults=async(req,res,next)=>{
     }
 }
 
-exports.getTodaysWinners=async(req,res,next)=>{
+exports.getMyWinnings=async(req,res,next)=>{
     try{
+        let {userId}=req.body
         let fromDate = new Date()
         fromDate = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate(), 0, 0, 0, 0);
         let filters = {
-            status:'announced',
-            // updatedAt:{$gte: fromDate} 
+            $or:[
+                {firstPosition:userId},
+                {secondPosition:userId},
+                {thirdPosition:userId},
+                {fourthPosition:userId},
+            ]
         }
-        let todaysWinners = await Bet.find(filters)
+        let myPrizes = await Winner.find(filters).lean().populate(
+            {
+                path: 'betId',
+                model: 'Bet',
+                select: { 'gameTitle':1,'winningNumbers':1},
+            },
+            
+        )
+        if(myPrizes.length>0){
+            let finalArr = []
+            for(let i=0 ; i<myPrizes.length ; i++){
+                let winningObj={}
+                let placement = await Placements.findOne({betId:myPrizes[i].betId._id , userId:userId},{_id:0 , numbers:1}).lean()
+                let winningPositions = []
+                for(j=0;j<placement.numbers.length; j++){
+                    if(myPrizes[i].betId.winningNumbers.includes(placement.numbers[j])) winningPositions.push(placement.numbers[j])}
+                winningObj.placement = winningPositions
+                winningObj.bet = myPrizes[i].betId
+                finalArr.push(winningObj)
+            }
             return res.json({
                 success:true,
                 status:200,
-                message:"Today's Winners",
-                data:{todaysWinners}
+                message:"Prizes",
+                data:{myPrizes : finalArr}
             })  
+        }
+        else{
+            return res.json({
+                success:true,
+                status:400,
+                message:"No bets Found",
+                data:null
+            })  
+        }
     }
     catch(err){
         console.log(err," :err")
