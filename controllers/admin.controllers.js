@@ -5,7 +5,9 @@ const Bet = require("../models/Bet")
 const Placements = require("../models/Placements")
 const User = require("../models/User.js")
 const Winner = require("../models/Winner")
+const { firebaseTopics } = require("../utils/firebaseTopics")
 const { JWT } = require("../utils/generateJWT")
+const { sendNotificationsToTopic } = require("../utils/notifications")
 const { encryptPassword, verifyPassword } = require("../utils/passwordFunctions")
 
 exports.adminLogin = async (req, res, next) => {
@@ -61,7 +63,6 @@ exports.createBet = async (req, res, next) => {
             })
         }
         const betCheck = await Bet.findOne({ gameTitle, status: 'ongoing' })
-        console.log(betCheck, " :bet check")
         if (betCheck) {
             return res.json({
                 success: false,
@@ -74,8 +75,13 @@ exports.createBet = async (req, res, next) => {
             gameTitle: gameTitle,
             gameType: gameType
         })
-        const savedBet = await toBeSaved.save(toBeSaved)
+        const savedBet = await toBeSaved.save()
         if (savedBet) {
+            let notification = {
+                title: 'New bet online',
+                body: `${savedBet.gameTitle}`
+            }
+            sendNotificationsToTopic(notification , firebaseTopics.sendToAll)
             return res.json({
                 success: true,
                 status: 200,

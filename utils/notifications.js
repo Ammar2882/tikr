@@ -54,10 +54,6 @@ exports.sendNotificationSingleDevice = async (regToken) => {
 
 exports.sendNotificationsToTopic = async (notification, topic) => {
     const message = {
-        // notification: {
-        //     title: 'New blog post',
-        //     body: 'Check out our latest blog post!'
-        // },
         notification,
         topic: `${topic}`
     };

@@ -5,6 +5,8 @@ const Bet = require("../models/Bet")
 const Placements = require("../models/Placements")
 const { verifyPassword } = require("../utils/passwordFunctions")
 const Winner = require("../models/Winner")
+const { subscribeToATopic } = require("../utils/notifications")
+const { firebaseTopics } = require("../utils/firebaseTopics")
 // const sendOtp = async (req, res, next) => {
 //     try {
 //         const body = req.body
@@ -58,7 +60,8 @@ const Winner = require("../models/Winner")
 
 exports.userLogin = async (req, res, next) => {
     try {
-        const { userName, password } = req.body
+        const { userName, password,firebaseId } = req.body
+        console.log(firebaseId)
         const user = await User.findOne({ userName: userName })
         if (!user) {
             return res.json({
@@ -77,14 +80,16 @@ exports.userLogin = async (req, res, next) => {
                 data: null
             })
         }
-        let token = await JWT(user)
+        subscribeToATopic(firebaseId,firebaseTopics.sendToAll)
+        let updatedUser = await User.findOneAndUpdate({_id:user._id},{firebaseId},{new:true})
+        let token = await JWT(updatedUser)
         res.json({
             success: true,
             status: 200,
             message: "Successfully Logged In",
             data: {
                 token: token,
-                user: user,
+                user: updatedUser,
                 role: 'user',
             }
         })

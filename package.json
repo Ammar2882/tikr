@@ -15,6 +15,7 @@
     "express": "~4.16.1",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^6.4.0",
+    "firebase-admin": "^11.5.0",
     "helmet": "^5.1.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",

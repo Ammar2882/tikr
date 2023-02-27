@@ -38,6 +38,10 @@ const UserSchema = new mongoose.Schema({
     balanceHistory:{
         type:[TransactionSchema],
         default:[],
+    },
+    firebaseId:{
+        type:String,
+        default:""
     }
 }, { timestamps: true })
 
