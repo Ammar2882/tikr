@@ -1,4 +1,5 @@
 
+const { trusted } = require("mongoose")
 const Admin = require("../models/Admin")
 const Bet = require("../models/Bet")
 const Placements = require("../models/Placements")
@@ -10,7 +11,7 @@ const { encryptPassword, verifyPassword } = require("../utils/passwordFunctions"
 exports.adminLogin = async (req, res, next) => {
     try {
         const { userName, password } = req.body
-        const admin = await Admin.findOne({userName:userName})
+        const admin = await Admin.findOne({ userName: userName })
         if (!admin) {
             return res.json({
                 success: false,
@@ -176,6 +177,9 @@ exports.getBetById = async (req, res, next) => {
     }
 }
 
+
+
+
 exports.deleteBet = async (req, res, next) => {
     try {
         const { betId, role } = req.body
@@ -340,7 +344,7 @@ exports.getUserById = async (req, res, next) => {
 
 exports.UpdateUserById = async (req, res, next) => {
     try {
-        const { role, userId ,password} = req.body
+        const { role, userId, password } = req.body
         if (role.toLowerCase() !== 'admin') {
             return res.json({
                 success: false,
@@ -350,7 +354,7 @@ exports.UpdateUserById = async (req, res, next) => {
             })
         }
         const hashedPassword = await encryptPassword(password)
-        const singleUser = await User.findOneAndUpdate({ _id: userId },{password:hashedPassword})
+        const singleUser = await User.findOneAndUpdate({ _id: userId }, { password: hashedPassword })
         return res.json({
             success: true,
             status: 200,
@@ -452,7 +456,7 @@ exports.withDraw = async (req, res, next) => {
         }
         const addBalance = await User.findOneAndUpdate(
             { _id: userId },
-            { balance: Math.abs(( parseInt(user.balance) - parseInt(balance))), $push: { balanceHistory: { cashValue: balance, direction: 'outbound' } } },
+            { balance: Math.abs((parseInt(user.balance) - parseInt(balance))), $push: { balanceHistory: { cashValue: balance, direction: 'outbound' } } },
             { new: true }
         )
 

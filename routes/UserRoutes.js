@@ -1,5 +1,5 @@
 const express = require('express');
-const { placeBet , userBets, drawingSoonBets, latestResults,  userLogin, getMyWinnings} = require('../controllers/user.controllers');
+const { placeBet , userBets, drawingSoonBets, latestResults,  userLogin, getMyWinnings, getBetByIdFormatted} = require('../controllers/user.controllers');
 const { checkAuth } = require('../middlewares/checkAuth');
 const router = express.Router();
 
@@ -16,5 +16,6 @@ router.post('/userbets',checkAuth,userBets)
 router.post('/drawingsoonbets',checkAuth,drawingSoonBets) 
 router.post('/latestresults',checkAuth,latestResults) 
 router.post('/myprizes',checkAuth,getMyWinnings) 
+router.post('/getbetbyidformatted',checkAuth , getBetByIdFormatted)
 
 module.exports = router
