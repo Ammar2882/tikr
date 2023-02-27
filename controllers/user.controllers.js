@@ -80,9 +80,12 @@ exports.userLogin = async (req, res, next) => {
                 data: null
             })
         }
-        subscribeToATopic(firebaseId,firebaseTopics.sendToAll)
-        let updatedUser = await User.findOneAndUpdate({_id:user._id},{firebaseId},{new:true})
-        let token = await JWT(updatedUser)
+        let updatedUser;
+        if(firebaseId){
+            subscribeToATopic(firebaseId,firebaseTopics.sendToAll)
+            updatedUser = await User.findOneAndUpdate({_id:user._id},{firebaseId},{new:true})
+        }
+        let token = await JWT(updatedUser ? updatedUser:user)
         res.json({
             success: true,
             status: 200,

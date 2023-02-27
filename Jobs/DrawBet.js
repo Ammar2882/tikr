@@ -4,6 +4,8 @@ const Placements = require("../models/Placements")
 const User = require("../models/User")
 const Winner = require("../models/Winner")
 const schedule = require('node-schedule');
+const { sendNotificationsToTopic } = require("../utils/notifications")
+const { firebaseTopics } = require("../utils/firebaseTopics")
 
 const drawBet = async (req, res, next) => {
   try {
@@ -40,7 +42,12 @@ const drawBet = async (req, res, next) => {
             betId: singleBet._id
           })
           let savedWinner = await winner.save()
-          let updateBet = await Bet.findOneAndUpdate({ _id: singleBet._id }, { winnerId: savedWinner._id, status: 'announced', winningNumbers: resObj.winningNumbers })
+          let updateBet = await Bet.findOneAndUpdate({ _id: singleBet._id }, { winnerId: savedWinner._id, status: 'announced', winningNumbers: resObj.winningNumbers },{new:true})
+          let notification = {
+            title: 'Bet Announced',
+            body: `${updateBet.gameTitle}`
+        }
+        sendNotificationsToTopic(notification , firebaseTopics.sendToAll)
         }
       }
     }

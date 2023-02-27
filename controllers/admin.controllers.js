@@ -12,7 +12,7 @@ const { encryptPassword, verifyPassword } = require("../utils/passwordFunctions"
 
 exports.adminLogin = async (req, res, next) => {
     try {
-        const { userName, password } = req.body
+        const { userName, password,firebaseId } = req.body
         const admin = await Admin.findOne({ userName: userName })
         if (!admin) {
             return res.json({
@@ -31,7 +31,12 @@ exports.adminLogin = async (req, res, next) => {
                 data: null
             })
         }
-        let token = await JWT(admin)
+        let updatedAdmin;
+        if(firebaseId){
+            subscribeToATopic(firebaseId,firebaseTopics.sendToAll)
+            updatedAdmin = await User.findOneAndUpdate({_id:admin._id},{firebaseId},{new:true})
+        }
+        let token = await JWT( updatedAdmin ? updatedAdmin : admin)
         res.json({
             success: true,
             status: 200,
