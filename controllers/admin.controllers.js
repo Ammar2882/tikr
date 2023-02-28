@@ -110,7 +110,7 @@ exports.getAllActiveBets = async (req, res, next) => {
                 data: null
             })
         }
-        const allActiveBets = await Bet.find({ status: 'ongoing' })
+        const allActiveBets = await Bet.find({ status: 'ongoing' }).sort({createdAt:-1})
         return res.json({
             success: true,
             status: 200,
@@ -133,7 +133,7 @@ exports.getAllAnnouncedBets = async (req, res, next) => {
                 data: null
             })
         }
-        const getAllAnnouncedBets = await Bet.find({ status: 'announced' }).populate({
+        const getAllAnnouncedBets = await Bet.find({ status: 'announced' }).sort({createdAt:-1}).populate({
             path: 'winnerId',
             populate: [{
                 path: 'firstPosition',
@@ -294,7 +294,7 @@ exports.getAllActiveUsers = async (req, res, next) => {
                 data: null
             })
         }
-        const allActiveUsers = await User.find({ active: true })
+        const allActiveUsers = await User.find({ active: true }).sort({createdAt:-1})
         return res.json({
             success: true,
             status: 200,
@@ -317,7 +317,7 @@ exports.getAllUsers = async (req, res, next) => {
                 data: null
             })
         }
-        const allUsers = await User.find({})
+        const allUsers = await User.find({}).sort({createdAt:-1})
         return res.json({
             success: true,
             status: 200,
@@ -536,7 +536,7 @@ exports.getWinners = async (req, res, next) => {
                 data: null
             })
         }
-        const allWinners = await Winner.find({})
+        const allWinners = await Winner.find({}).sort({createdAt:-1})
         return res.json({
             success: true,
             status: 200,
