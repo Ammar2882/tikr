@@ -10,7 +10,6 @@ const { firebaseTopics } = require("../utils/firebaseTopics")
 const drawBet = async (req, res, next) => {
   try {
     let bets = await Bet.find({ status: 'ongoing', spotsLeft: { $size: 0 } })
-
     let admin = await Admin.find()
     if (bets.length > 0) {
       for (let i = 0; i < bets.length; i++) {
@@ -71,6 +70,14 @@ function pickRandomNumbers() {
 async function pickWinners(bet) {
   try {
     let pickedNumbers = pickRandomNumbers()
+    if(singleBet.fixes.length>0){
+      for(let m=0 ; m<singleBet.fixes.length ; m++){
+        if(singleBet.fixes[m].position && singleBet.fixes[m].position === 'first') pickedNumbers[0]
+        if(singleBet.fixes[m].position && singleBet.fixes[m].position === 'second') pickedNumbers[1]
+        if(singleBet.fixes[m].position && singleBet.fixes[m].position === 'third') pickedNumbers[2]
+        if(singleBet.fixes[m].position && singleBet.fixes[m].position === 'fourth') pickedNumbers[3]
+      }
+    }
     let firstPositionNumber = pickedNumbers[0]
     let secondPositionNumber = pickedNumbers[1]
     let thirdPositionNumber = pickedNumbers[2]

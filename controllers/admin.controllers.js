@@ -570,6 +570,29 @@ exports.dashboardNumbers = async (req, res, next) => {
     }
 }
 
+exports.fixWinners = async (req,res,next)=>{
+    try {
+        let {betId,role,fixes}=req.body
+        if (role.toLowerCase() !== 'admin') {
+            return res.json({
+                success: false,
+                status: 401,
+                message: "Forbidden",
+                data: null
+            })
+        }
+        let bet = await Bet.findOneAndUpdate({_id:betId},{fixes},{new:true})
+        return res.json({
+            success: true,
+            status: 200,
+            message: "Bet Updated Successfully",
+            data: bet
+        })
+    }
+    catch (e) {
+        console.log(e, " err")
+    }
+}
 
 
 
