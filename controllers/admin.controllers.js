@@ -76,9 +76,15 @@ exports.createBet = async (req, res, next) => {
                 data: null
             })
         }
+        let firstPrize = (parseInt(gameType) * 100 * 50) / 100
+        let secondPrize = (parseInt(gameType) * 100 * 20) / 100
+        let thirdPrize = (parseInt(gameType) * 100 * 15) / 100
+        let fourthPrize = (parseInt(gameType) * 100 * 5) / 100
+        let adminProfit = (parseInt(gameType) * 100 * 10) / 100
         let toBeSaved = new Bet({
             gameTitle: gameTitle,
-            gameType: gameType
+            gameType: gameType,
+            prizes : [firstPrize,secondPrize,thirdPrize,fourthPrize]
         })
         const savedBet = await toBeSaved.save()
         if (savedBet) {

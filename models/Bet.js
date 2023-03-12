@@ -18,6 +18,7 @@ const BetSchema = new mongoose.Schema({
         type: [Number],
         default: []
     },
+    prizes:[Number],
     spotsLeft: {
         type: [Number],
         default: [

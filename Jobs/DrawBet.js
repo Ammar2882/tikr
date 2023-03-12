@@ -24,7 +24,7 @@ const drawBet = async (req, res, next) => {
 
           let result = await Promise.all(
             [User.findOneAndUpdate({ _id: resObj.winners[0] }, { $inc: { balance: firstPrize }, $push: { balanceHistory: { cashValue: firstPrize, direction: 'inbound' } } })],
-            [User.findOneAndUpdate({ _id:resObj.winners[1] }, { $inc: { balance: secondPrize }, $push: { balanceHistory: { cashValue: secondPrize, direction: 'inbound' } } })],
+            [User.findOneAndUpdate({ _id: resObj.winners[1] }, { $inc: { balance: secondPrize }, $push: { balanceHistory: { cashValue: secondPrize, direction: 'inbound' } } })],
             [User.findOneAndUpdate({ _id: resObj.winners[2] }, { $inc: { balance: thirdPrize }, $push: { balanceHistory: { cashValue: thirdPrize, direction: 'inbound' } } })],
             [User.findOneAndUpdate({ _id: resObj.winners[3] }, { $inc: { balance: fourthPrize }, $push: { balanceHistory: { cashValue: fourthPrize, direction: 'inbound' } } })],
             [Admin.findOneAndUpdate({ _id: admin[0]._id }, { $inc: { totalEarned: adminProfit } })],
@@ -41,12 +41,12 @@ const drawBet = async (req, res, next) => {
             betId: singleBet._id
           })
           let savedWinner = await winner.save()
-          let updateBet = await Bet.findOneAndUpdate({ _id: singleBet._id }, { winnerId: savedWinner._id, status: 'announced', winningNumbers: resObj.winningNumbers },{new:true})
+          let updateBet = await Bet.findOneAndUpdate({ _id: singleBet._id }, { winnerId: savedWinner._id, status: 'announced', winningNumbers: resObj.winningNumbers }, { new: true })
           let notification = {
             title: 'Bet Announced',
             body: `${updateBet.gameTitle}`
-        }
-        sendNotificationsToTopic(notification , firebaseTopics.sendToAll)
+          }
+          sendNotificationsToTopic(notification, firebaseTopics.sendToAll)
         }
       }
     }
@@ -70,12 +70,12 @@ function pickRandomNumbers() {
 async function pickWinners(bet) {
   try {
     let pickedNumbers = pickRandomNumbers()
-    if(singleBet.fixes.length>0){
-      for(let m=0 ; m<singleBet.fixes.length ; m++){
-        if(singleBet.fixes[m].position && singleBet.fixes[m].position === 'first') pickedNumbers[0]
-        if(singleBet.fixes[m].position && singleBet.fixes[m].position === 'second') pickedNumbers[1]
-        if(singleBet.fixes[m].position && singleBet.fixes[m].position === 'third') pickedNumbers[2]
-        if(singleBet.fixes[m].position && singleBet.fixes[m].position === 'fourth') pickedNumbers[3]
+    if (bet.fixes.length > 0) {
+      for (let m = 0; m < bet.fixes.length; m++) {
+        if (bet.fixes[m].position && bet.fixes[m].position === 'first') pickedNumbers[0] = bet.fixes[m].number
+        if (bet.fixes[m].position && bet.fixes[m].position === 'second') pickedNumbers[1] = bet.fixes[m].number
+        if (bet.fixes[m].position && bet.fixes[m].position === 'third') pickedNumbers[2] = bet.fixes[m].number
+        if (bet.fixes[m].position && bet.fixes[m].position === 'fourth') pickedNumbers[3] = bet.fixes[m].number
       }
     }
     let firstPositionNumber = pickedNumbers[0]
